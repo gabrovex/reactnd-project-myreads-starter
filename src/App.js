@@ -1,107 +1,79 @@
-import React from 'react'
-// import * as BooksAPI from './BooksAPI'
-import './App.css'
+import React, {Component} from 'react';
+import { Route, Link } from 'react-router-dom'
+import Shelf from './components/Shelf';
+import AddBook from './components/AddBook';
+import * as BooksAPI from './BooksAPI';
+import './App.css';
 
-const bookStatuses = [
+
+const shelves = [
   {
-    id: 1,
-    status: 'Currently Reading',
+    id: 'currentlyReading',
+    name: 'Currently Reading',
+    isVisible: true,
   },
   {
-    id: 2,
-    status: 'Want to Read',
+    id: 'wantToRead',
+    name: 'Want to Read',
+    isVisible: true,
   },
   {
-    id: 3,
-    status: 'Read',
+    id: 'read',
+    name: 'Read',
+    isVisible: true,
   },
   {
-    id: 3,
-    status: 'None',
+    id: 'none',
+    name: 'None',
+    isVisible: false,
   },  
 ]
 
-class BooksApp extends React.Component {
+class BooksApp extends Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false
+    books: [],
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
+    })
+  }
+
+  getBooksByShelfId = (shelfId) => (
+      this.state.books.filter(book => book.shelf === shelfId)
+  )
+  
+  updateBooks = (updatedBook) => {
+    this.setState((state)=>({
+      // get all the books but the outdated one, and concat the updated one
+      books: state.books.filter((book) => book.id !== updatedBook.id).concat(updatedBook)
+    }))
   }
 
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
-              <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type="text" placeholder="Search by title or author"/>
-
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
-        ) : (
+        <Route exact path='/search' render={() =>
+          <AddBook shelves={shelves} books={this.state.books} onShelfChange={this.updateBooks} />}
+        />
+        <Route exact path='/' render={() => (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
               <div>
-
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-
-                      <li>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")' }}></div>
-
-                            <div className="book-shelf-changer">
-                              <select>
-                                <option value="move" disabled>Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
-                              </select>
-                            </div>
-
-                          </div>
-                          <div className="book-title">To Kill a Mockingbird</div>
-                          <div className="book-authors">Harper Lee</div>
-                        </div>
-                      </li>
-
-                    </ol>
-                  </div>
-                </div>
-
-
+                {shelves.filter(shelf => shelf.isVisible).map((shelf) => {
+                  return <Shelf key={shelf.id} shelf={shelf} books={this.getBooksByShelfId(shelf.id)} shelves={shelves} onShelfChange={this.updateBooks} />
+                })}
               </div>
             </div>
             <div className="open-search">
-              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+            <Link to='/search' className='add-contact'><button>Add a book</button></Link>
             </div>
           </div>
-        )}
+          )}/>
       </div>
     )
   }

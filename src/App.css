@@ -121,7 +121,10 @@ button:active {
 .search-books-results {
   padding: 80px 10px 20px;
 }
-
+.search-books-results ol{
+  display: inline-block;
+  vertical-align: top;
+}
 /* books grid */
 
 .books-grid {
