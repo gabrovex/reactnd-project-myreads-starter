@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Book from "./Book";
 
 class Shelf extends Component {
+  
   render() {
     const { shelf, books, shelves, onShelfChange } = this.props;
     return (

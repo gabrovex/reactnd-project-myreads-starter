@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Shelf from "./Shelf";
 
 class Shelves extends Component {
+  
   getBooksByShelfId = (shelfId) =>
     this.props.books.filter((book) => book.shelf === shelfId);
 

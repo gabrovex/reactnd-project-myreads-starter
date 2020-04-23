@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ShelfSelector from "./ShelfSelector";
 
 class Book extends Component {
+  
   render() {
     const { book, shelves, onShelfChange } = this.props;
     return (

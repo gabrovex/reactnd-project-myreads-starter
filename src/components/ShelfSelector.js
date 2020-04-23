@@ -5,6 +5,7 @@ import * as BooksAPI from "../BooksAPI";
 const DEFAULT_SHELF_ID = "none";
 
 class ShelfSelector extends Component {
+  
   handleShelfChange = (event) => {
     const { book, onShelfChange } = this.props;
     const shelf = event.target.value;
