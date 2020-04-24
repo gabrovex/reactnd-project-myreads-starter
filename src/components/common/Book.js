@@ -5,7 +5,7 @@ import ShelfSelector from "./ShelfSelector";
 class Book extends Component {
   
   render() {
-    const { book, shelves, onShelfChange } = this.props;
+    const { book, shelves, onBookUpdate } = this.props;
     return (
       <div className="book">
         <div className="book-top">
@@ -14,7 +14,7 @@ class Book extends Component {
               width: 128, height: 193, backgroundImage: `url("${book.imageLinks && book.imageLinks.thumbnail}")`,
             }}
           />
-          <ShelfSelector shelves={shelves} book={book} onShelfChange={onShelfChange} />
+          <ShelfSelector shelves={shelves} book={book} onBookUpdate={onBookUpdate} />
         </div>
         <div className="book-title">{book.title}</div>
         <div className="book-authors">{book.authors && book.authors.join(", ")}</div>
@@ -26,7 +26,7 @@ class Book extends Component {
 Book.propTypes = {
   book: PropTypes.object.isRequired,
   shelves: PropTypes.array.isRequired,
-  onShelfChange: PropTypes.func.isRequired,
+  onBookUpdate: PropTypes.func.isRequired,
 };
 
 export default Book;

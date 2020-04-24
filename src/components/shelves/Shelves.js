@@ -9,7 +9,7 @@ class Shelves extends Component {
     this.props.books.filter((book) => book.shelf === shelfId);
 
   render() {
-    const { shelves, onShelfChange } = this.props;
+    const { shelves, onBookUpdate } = this.props;
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -23,7 +23,7 @@ class Shelves extends Component {
                   shelf={shelf}
                   books={this.getBooksByShelfId(shelf.id)}
                   shelves={shelves}
-                  onShelfChange={onShelfChange}
+                  onBookUpdate={onBookUpdate}
                 />
               ))}
           </div>
@@ -39,7 +39,7 @@ class Shelves extends Component {
 Shelf.propTypes = {
   shelves: PropTypes.array.isRequired,
   books: PropTypes.array.isRequired,
-  onShelfChange: PropTypes.func.isRequired,
+  onBookUpdate: PropTypes.func.isRequired,
 };
 
 export default Shelves;
