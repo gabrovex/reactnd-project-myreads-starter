@@ -22,7 +22,7 @@ class Shelves extends Component {
                   key={shelf.id}
                   shelf={shelf}
                   books={this.getBooksByShelfId(shelf.id)}
-                  shelves={shelves}
+                  updateOptions={shelves}
                   onBookUpdate={onBookUpdate}
                 />
               ))}
@@ -36,7 +36,7 @@ class Shelves extends Component {
   }
 }
 
-Shelf.propTypes = {
+Shelves.propTypes = {
   shelves: PropTypes.array.isRequired,
   books: PropTypes.array.isRequired,
   onBookUpdate: PropTypes.func.isRequired,

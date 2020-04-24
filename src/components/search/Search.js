@@ -30,11 +30,11 @@ class Search extends Component {
   };
 
   render() {
-    const { shelves, onBookUpdate } = this.props;
+    const { updateOptions, onBookUpdate } = this.props;
     return (
       <div className="search-books">
         <SearchBar onSearchChange={this.searchChange} />
-        <SearchResults bookResults={this.state.bookResults} shelves={shelves} onBookUpdate={onBookUpdate} />
+        <SearchResults bookResults={this.state.bookResults} updateOptions={updateOptions} onBookUpdate={onBookUpdate} />
       </div>
     );
   }
@@ -42,7 +42,7 @@ class Search extends Component {
 
 Search.propTypes = {
   books: PropTypes.array.isRequired,
-  shelves: PropTypes.array.isRequired,
+  updateOptions: PropTypes.array.isRequired,
   onBookUpdate: PropTypes.func.isRequired,
 };
 

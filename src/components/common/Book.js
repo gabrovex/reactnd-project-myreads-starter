@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ShelfSelector from "./ShelfSelector";
+import BookUpdater from "./BookUpdater";
 
 class Book extends Component {
   
   render() {
-    const { book, shelves, onBookUpdate } = this.props;
+    const { book, updateOptions, onBookUpdate } = this.props;
     return (
       <div className="book">
         <div className="book-top">
@@ -14,7 +14,7 @@ class Book extends Component {
               width: 128, height: 193, backgroundImage: `url("${book.imageLinks && book.imageLinks.thumbnail}")`,
             }}
           />
-          <ShelfSelector shelves={shelves} book={book} onBookUpdate={onBookUpdate} />
+          <BookUpdater updateOptions={updateOptions} book={book} onBookUpdate={onBookUpdate} />
         </div>
         <div className="book-title">{book.title}</div>
         <div className="book-authors">{book.authors && book.authors.join(", ")}</div>
@@ -25,7 +25,7 @@ class Book extends Component {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  shelves: PropTypes.array.isRequired,
+  updateOptions: PropTypes.array.isRequired,
   onBookUpdate: PropTypes.func.isRequired,
 };
 

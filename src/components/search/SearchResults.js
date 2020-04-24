@@ -4,12 +4,12 @@ import Book from "../common/Book";
 
 class SearchResults extends Component {
   render() {
-    const { shelves, onBookUpdate, bookResults } = this.props;
+    const { updateOptions, onBookUpdate, bookResults } = this.props;
     return (
       <div className="search-books-results">
         {bookResults.map((book) => (
           <ol key={book.id}>
-            <Book book={book} shelves={shelves} onBookUpdate={onBookUpdate} />
+            <Book book={book} updateOptions={updateOptions} onBookUpdate={onBookUpdate} />
           </ol>
         ))}
       </div>
@@ -19,7 +19,7 @@ class SearchResults extends Component {
 
 SearchResults.propTypes = {
   bookResults: PropTypes.array.isRequired,
-  shelves: PropTypes.array.isRequired,
+  updateOptions: PropTypes.array.isRequired,
   onBookUpdate: PropTypes.func.isRequired,
 };
 
