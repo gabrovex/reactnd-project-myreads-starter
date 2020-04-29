@@ -24,7 +24,7 @@ class Search extends Component {
             .map((booksResult) => (booksResult.shelf = book.shelf))
         );
         this.setState({ bookResults: bookResults });
-      }).catch((err) => {
+      }).catch(() => {
         this.clearSearch();
       });
   };

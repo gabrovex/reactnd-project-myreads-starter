@@ -5,10 +5,6 @@ import PropTypes from "prop-types";
 
 class SearchBar extends Component {
 
-  clearSearch = () => {
-    this.setState({ bookResults: [] });
-  };
-
   handleSearchChange = (e) => {
     this.props.onSearchChange(e.target.value)
   };
