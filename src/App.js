@@ -42,10 +42,11 @@ class BooksApp extends Component {
 
   updateBooks = (bookToUpdate, shelfId) => {
     BooksAPI.update(bookToUpdate, shelfId).then(() => {
-      bookToUpdate.shelf = shelfId;
+      const clonedBook = { ...bookToUpdate }; // Clone book to cause state can't be changed by assignment
+      clonedBook.shelf = shelfId;
       this.setState((state) => ({
         // get all the books but the outdated one, and concat the updated one
-        books: state.books.filter((book) => book.id !== bookToUpdate.id).concat(bookToUpdate),
+        books: state.books.filter((book) => book.id !== bookToUpdate.id).concat(clonedBook),
       }));
     });
   };
