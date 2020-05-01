@@ -1,20 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Book from "../common/Book";
 
-class SearchResults extends Component {
-  render() {
-    const { updateOptions, onBookUpdate, bookResults } = this.props;
-    return (
-      <div className="search-books-results">
-        {bookResults.map((book) => (
-          <ol key={book.id}>
-            <Book book={book} updateOptions={updateOptions} onBookUpdate={onBookUpdate} />
-          </ol>
-        ))}
-      </div>
-    );
-  }
+const SearchResults = (props) => {
+  const { updateOptions, onBookUpdate, bookResults } = props;
+  return (
+    <div className="search-books-results">
+      {bookResults.map((book) => (
+        <ol key={book.id}>
+          <Book book={book} updateOptions={updateOptions} onBookUpdate={onBookUpdate} />
+        </ol>
+      ))}
+    </div>
+  );
 }
 
 SearchResults.propTypes = {

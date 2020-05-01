@@ -1,20 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 
 
-class Search extends Component {
-
-  render() {
-    const { updateOptions, onBookUpdate, onSearchChange, bookResults, books } = this.props;
-    return (
-      <div className="search-books">
-        <SearchBar onSearchChange={onSearchChange} books={books} />
-        <SearchResults bookResults={bookResults} updateOptions={updateOptions} onBookUpdate={onBookUpdate} />
-      </div>
-    );
-  }
+const Search  = (props) => {
+  const { updateOptions, onBookUpdate, onSearchChange, bookResults, books } = props;
+  return (
+    <div className="search-books">
+      <SearchBar onSearchChange={onSearchChange} books={books} />
+      <SearchResults bookResults={bookResults} updateOptions={updateOptions} onBookUpdate={onBookUpdate} />
+    </div>
+  );
 }
 
 Search.propTypes = {

@@ -1,26 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BookUpdater from "./BookUpdater";
 
-class Book extends Component {
-  
-  render() {
-    const { book, updateOptions, onBookUpdate } = this.props;
-    return (
-      <div className="book">
-        <div className="book-top">
-          <div className="book-cover"
-            style={{
-              width: 128, height: 193, backgroundImage: `url("${book.imageLinks && book.imageLinks.thumbnail}")`,
-            }}
-          />
-          <BookUpdater updateOptions={updateOptions} book={book} onBookUpdate={onBookUpdate} />
-        </div>
-        <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.authors && book.authors.join(", ")}</div>
+const Book = (props) => {
+
+  const { book, updateOptions, onBookUpdate } = props;
+  return (
+    <div className="book">
+      <div className="book-top">
+        <div className="book-cover"
+          style={{
+            width: 128, height: 193, backgroundImage: `url("${book.imageLinks && book.imageLinks.thumbnail}")`,
+          }}
+        />
+        <BookUpdater updateOptions={updateOptions} book={book} onBookUpdate={onBookUpdate} />
       </div>
-    );
-  }
+      <div className="book-title">{book.title}</div>
+      <div className="book-authors">{book.authors && book.authors.join(", ")}</div>
+    </div>
+  );
 }
 
 Book.propTypes = {
