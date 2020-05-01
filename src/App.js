@@ -43,10 +43,16 @@ class BooksApp extends Component {
 
   updateBooks = (bookToUpdate, shelf) => {
     BooksAPI.update(bookToUpdate, shelf).then(() => {
-      this.setState((state) => ({
-        books: this.updateBooksState(state.books, bookToUpdate.id, shelf),
-        bookResults: this.updateBooksState(state.bookResults, bookToUpdate.id, shelf),
-      }));
+      this.setState((state) => {
+        const clonedBooks = [...state.books]
+        if (!clonedBooks.filter((book) => book.id === bookToUpdate.id).length) {
+          clonedBooks.push(bookToUpdate);
+        }
+        return {
+          books: this.updateBooksState(clonedBooks, bookToUpdate.id, shelf),
+          bookResults: this.updateBooksState(state.bookResults, bookToUpdate.id, shelf),
+        }
+      });
     });
   };
 
