@@ -31,7 +31,8 @@ const shelves = [
 class BooksApp extends Component {
 
   state = {
-    books: [],
+    books: [], // contains the books in our shelves
+    bookResults: [], // contains the books of the search result
   };
 
   componentDidMount() {
@@ -40,15 +41,21 @@ class BooksApp extends Component {
     });
   }
 
-  updateBooks = (bookToUpdate, shelfId) => {
-    BooksAPI.update(bookToUpdate, shelfId).then(() => {
-      const clonedBook = { ...bookToUpdate }; // Clone book to cause state can't be changed by assignment
-      clonedBook.shelf = shelfId;
+  updateBooks = (bookToUpdate, shelf) => {
+    BooksAPI.update(bookToUpdate, shelf).then(() => {
       this.setState((state) => ({
-        // get all the books but the outdated one, and concat the updated one
-        books: state.books.filter((book) => book.id !== bookToUpdate.id).concat(clonedBook),
+        books: this.updateBooksState(state.books, bookToUpdate.id, shelf),
+        bookResults: this.updateBooksState(state.bookResults, bookToUpdate.id, shelf),
       }));
     });
+  };
+
+  // return the array of books updated with the proper shelf
+  updateBooksState = (books, bookToUpdateID, shelf) =>
+    (books.map(book => (book.id === bookToUpdateID ? { ...book, shelf } : book)));
+
+  updateBookResults = (bookResults) => {
+    this.setState({ bookResults });
   };
 
   render() {
@@ -59,7 +66,13 @@ class BooksApp extends Component {
           )}
         />
         <Route exact path="/search" render={() => (
-            <Search updateOptions={shelves} books={this.state.books} onBookUpdate={this.updateBooks} />
+            <Search
+              updateOptions={shelves}
+              books={this.state.books}
+              bookResults={this.state.bookResults}
+              onBookUpdate={this.updateBooks} 
+              onSearchChange={this.updateBookResults} 
+            />
           )}
         />
       </div>

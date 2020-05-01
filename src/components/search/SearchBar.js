@@ -2,11 +2,23 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Debounce } from "react-throttle";
 import PropTypes from "prop-types";
+import * as BooksAPI from "../common/BooksAPI";
 
 class SearchBar extends Component {
 
   handleSearchChange = (e) => {
-    this.props.onSearchChange(e.target.value)
+    const query = e.target.value;
+    BooksAPI.search(query).then((bookResults) => {
+      // map the shelves' books and, if they are in the books' result,
+      // update the result with the proper shelf
+      this.props.books.map((book) =>
+        bookResults.filter((booksResult) => booksResult.id === book.id)
+          .map((booksResult) => (booksResult.shelf = book.shelf))
+      );
+      this.props.onSearchChange(bookResults);
+    }).catch((error) => {
+      this.props.onSearchChange([]);
+    });
   };
 
   render() {
@@ -27,6 +39,7 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
+  books: PropTypes.array.isRequired,
   onSearchChange: PropTypes.func.isRequired,
 };
 
